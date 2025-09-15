@@ -1,0 +1,32 @@
+{
+  "name": "yipl-backend-2025",
+  "version": "1.0.0",
+  "description": "RESTful Library Management API for YIPL Internship",
+  "main": "server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "migrate": "node src/config/db.js migrate",
+    "seed": "node src/config/db.js seed",
+    "test": "mocha --timeout 5000"
+  },
+  "keywords": [
+    "library",
+    "api",
+    "sqlite",
+    "nodejs"
+  ],
+  "author": "Krisha Tuladhar",
+  "type": "commonjs",
+  "dependencies": {
+    "dotenv": "^17.2.2",
+    "sqlite3": "^5.1.7",
+    "swagger-ui-dist": "^5.29.0",
+    "winston": "^3.17.0",
+    "winston-daily-rotate-file": "^5.0.0"
+  },
+  "devDependencies": {
+    "chai": "^6.0.1",
+    "mocha": "^11.7.2",
+    "sinon": "^21.0.0"
+  }
+}

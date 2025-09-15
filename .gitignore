@@ -1,0 +1,27 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+
+# SQLite database files
+/data/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+
+# Build output
+dist/
+build/
+
+# Editor temp files
+*.swp
+.vscode/
