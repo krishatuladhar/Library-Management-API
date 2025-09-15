@@ -1,5 +1,6 @@
 const { getPathParts } = require("../utils/url");
 const authors = require("../controllers/authors");
+const books = require("../controllers/books");
 
 // Base router function to handle all incoming requests
 function router(req, res) {
@@ -22,7 +23,7 @@ function router(req, res) {
         return res.end(JSON.stringify({ status: "ok" }));
       }
 
-      // Route handling for authors only
+      // Route handling for authors
       if (resource === "authors") {
         if (req.method === "GET" && !id) {
           return await authors.listAuthors(req, res);
@@ -34,6 +35,22 @@ function router(req, res) {
 
         if (req.method === "GET" && id) {
           return await authors.getAuthorById(req, res, Number(id));
+        }
+      }
+
+      // Route handling for books
+      if (resource === "books") {
+        if (req.method === "GET" && !id) {
+          return await books.listBooks(req, res);
+        }
+        if (req.method === "POST" && !id) {
+          return await books.createBook(req, res);
+        }
+        if (req.method === "PUT" && id) {
+          return await books.updateBookByISBN(req, res, id);
+        }
+        if (req.method === "GET" && id) {
+          return await books.getBookByISBN(req, res, id);
         }
       }
 
