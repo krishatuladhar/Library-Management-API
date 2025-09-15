@@ -1,0 +1,212 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Library Management API",
+    "description": "RESTful API for managing authors and books.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/authors": {
+      "get": {
+        "summary": "List all authors",
+        "description": "Get all authors with optional filters, sorting, and pagination",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Filter by author name (partial match)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort by number of books written",
+            "schema": { "type": "string", "enum": ["book_count"] }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Sort order (asc or desc)",
+            "schema": { "type": "string", "enum": ["asc", "desc"] }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "schema": { "type": "integer", "default": 1 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of results per page",
+            "schema": { "type": "integer", "default": 10 }
+          }
+        ],
+        "responses": { "200": { "description": "Success" } }
+      },
+      "post": {
+        "summary": "Create a new author",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string", "example": "Krisha Tuladhar" },
+                  "email": {
+                    "type": "string",
+                    "example": "krisha@authors.test"
+                  }
+                },
+                "required": ["name", "email"]
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Success" } }
+      }
+    },
+    "/authors/{id}": {
+      "get": {
+        "summary": "Get author by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/books": {
+      "get": {
+        "summary": "List all books",
+        "description": "Get all books with optional filters, sorting, and pagination",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query",
+            "description": "Filter by book title (partial match)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "author",
+            "in": "query",
+            "description": "Filter by author name",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "description": "Filter by published year",
+            "schema": { "type": "integer" }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort by field (title, published_year, created_at)",
+            "schema": {
+              "type": "string",
+              "enum": ["title", "published_year", "created_at"]
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Sort order (asc or desc)",
+            "schema": { "type": "string", "enum": ["asc", "desc"] }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "schema": { "type": "integer", "default": 1 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of results per page",
+            "schema": { "type": "integer", "default": 10 }
+          }
+        ],
+        "responses": { "200": { "description": "Success" } }
+      },
+      "post": {
+        "summary": "Create a new book",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "Javascript for Beginners"
+                  },
+                  "isbn": { "type": "string", "example": "1234567890" },
+                  "published_year": { "type": "integer", "example": 2013 },
+                  "author_id": { "type": "integer", "example": 1 }
+                },
+                "required": ["title", "isbn", "author_id"]
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Success" } }
+      }
+    },
+    "/books/{isbn}": {
+      "get": {
+        "summary": "Get book by ISBN",
+        "description": "Fetch a single book by its unique ISBN, including author details",
+        "parameters": [
+          {
+            "name": "isbn",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "Success" } }
+      },
+      "put": {
+        "summary": "Update a book by ISBN",
+        "parameters": [
+          {
+            "name": "isbn",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string", "example": "Updated Title" },
+                  "isbn": { "type": "string", "example": "1234567890" },
+                  "published_year": { "type": "integer", "example": 2020 },
+                  "author_id": { "type": "integer", "example": 1 }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Success" } }
+      }
+    }
+  }
+}

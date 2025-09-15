@@ -1,6 +1,14 @@
 const { getPathParts } = require("../utils/url");
 const authors = require("../controllers/authors");
 const books = require("../controllers/books");
+const fs = require("fs");
+const path = require("path");
+
+// Load swagger.json once
+const swaggerJson = fs.readFileSync(
+  path.join(__dirname, "..", "swagger.json"),
+  "utf8"
+);
 
 // Base router function to handle all incoming requests
 function router(req, res) {
@@ -17,6 +25,49 @@ function router(req, res) {
     try {
       const parts = getPathParts(req.url);
       const [resource, id] = parts;
+
+      // Serve Swagger UI and JSON
+      if (resource === "docs") {
+        if (!id) {
+          res.setHeader("Content-Type", "text/html");
+
+          // Simple Swagger UI HTML
+          const swaggerUI = `
+            <!DOCTYPE html>
+            <html>
+            <head>
+              <title>Library API Docs</title>
+              <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.18.3/swagger-ui.css" />
+            </head>
+            <body>
+              <div id="swagger-ui"></div>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.18.3/swagger-ui-bundle.js"></script>
+              <script>
+                window.onload = () => {
+                  SwaggerUIBundle({
+                    url: '/docs/swagger.json',
+                    dom_id: '#swagger-ui',
+                    presets: [
+                      SwaggerUIBundle.presets.apis,
+                      SwaggerUIBundle.SwaggerUIStandalonePreset
+                    ],
+                    layout: "BaseLayout"
+                  });
+                };
+              </script>
+            </body>
+            </html>
+          `;
+          res.end(swaggerUI);
+          return;
+        }
+
+        if (id === "swagger.json") {
+          res.setHeader("Content-Type", "application/json");
+          res.end(swaggerJson);
+          return;
+        }
+      }
 
       // Basic health check at root
       if (req.method === "GET" && resource === "") {
