@@ -1,0 +1,27 @@
+services:
+  app:
+    build: .
+    container_name: yipl-backend-2025-app
+    ports:
+      - "3000:3000"
+    volumes:
+      - app_data:/app/data
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_FILE: /app/data/yipl.db
+    command: npm start
+
+  test:
+    build: .
+    container_name: yipl-backend-2025-test
+    volumes:
+      - test_data:/app/data
+    environment:
+      NODE_ENV: test
+      DATABASE_FILE: /app/data/yipl_test.db
+    command: npm start
+
+volumes:
+  app_data:
+  test_data:
