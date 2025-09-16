@@ -17,7 +17,7 @@ A simple RESTful API for managing books and authors, built with Node.js and SQLi
 ### Local Setup
     git clone <repo-url>
     cd yipl-backend-2025
-    npm install
+    npm ci
     npm run migrate    # create database schema
     npm run seed      # insert sample authors + books
     npm start
