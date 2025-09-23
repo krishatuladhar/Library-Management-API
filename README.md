@@ -34,8 +34,10 @@ A simple RESTful API for managing books and authors, built with Node.js and SQLi
 - The SQLite database (`library.sqlite`) is persisted in a Docker volume (`db_data`).
 - If starting fresh, run migrations + seed manually inside the container:
 
-      docker exec -it yipl-backend-2025-app npm run migrate
-      docker exec -it yipl-backend-2025-app npm run seed
+         docker compose run --rm test npm run migrate
+         docker compose run --rm test npm run seed
+         docker compose run --rm test npm test
+
 - The API will be accessible at http://localhost:3000
 - To force a full rebuild without cache, you can run:
 docker-compose build --no-cache
