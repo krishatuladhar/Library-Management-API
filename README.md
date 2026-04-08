@@ -71,8 +71,7 @@ Note: For running tests, you need to manually set NODE_ENV=test to use the test 
 ## Swagger/OpenAPI
 
 Swagger documentation is available at:  
- (http://localhost:5000/api-docs)
-
+ (http://localhost:3000/docs)
 Includes:
 
 - Endpoint descriptions
